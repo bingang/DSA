@@ -33,6 +33,15 @@ int partition(int* A,int* B,int p,int q){
 	}
 	int middle = i;
 	printf("middle : %d\n", middle);
+	pivot = B[middle];
+	i = p;
+	j = q;
+	while(1){
+		while(A[i] < pivot) i++;
+		while(A[j] > pivot) j--;
+		if(i == j) break;
+		swap(&A[i],&A[j]);
+	}
 	return middle;
 }
 void printArr(int* A,int n){
@@ -47,7 +56,10 @@ int main(int argc, char const *argv[])
 	int n = sizeof(pan)/sizeof(pan[0]);
 	int p = 0;
 	int q = n - 1; 
-	int k = partition(pan,tea,p,q);
+	int k = partition(pan,tea,p,q);	
+	printf("tea :");
 	printArr(tea,n);
+	printf("pan :");
+	printArr(pan,n);
 	return 0;
 }
