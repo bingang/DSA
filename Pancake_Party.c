@@ -8,8 +8,8 @@ void swap(int* a, int* b){
 }
 
 int partition(int* A,int* B,int p,int q){
-	// (rand() % (q - p + 1)) + p;
-	int pivot_idx =  (p + q)/2;
+	srand(p+q);
+	int pivot_idx =  (rand() % (q - p + 1)) + p;
 	int pivot = A[pivot_idx];
 	// printf("pivot_idx : %d\n",pivot_idx);
 	// printf("pivot : %d\n", pivot);
@@ -44,11 +44,16 @@ void printArr(int* A,int n){
 	printf("\n");
 }
 void quicksort(int* A,int* B,int p,int q){
-	if (p < q){
+	while (p < q){
 		int m = partition(A,B,p,q);
-		quicksort(A,B,p,m-1);
-		quicksort(A,B,m+1,q);
-		// printf("in quicksort\n");
+		if (m - p < q - m){
+			quicksort(A,B,p,m-1);
+			p = m + 1;
+		}
+		else{
+			quicksort(A,B,m+1,q);
+			q = m - 1;
+		}
 	}
 }
 int main(int argc, char const *argv[])
@@ -57,8 +62,8 @@ int main(int argc, char const *argv[])
 	// int tea[] = {4,7,5,9,1,3,8,2,6};
 	// int n = sizeof(pan)/sizeof(pan[0]);
 	int N;
-	int pan[510000];
-	int tea[510000];
+	int pan[500001];
+	int tea[500001];
 	
 	scanf("%d",&N);				
 	for ( int i = 0 ; i < N ; i++)
