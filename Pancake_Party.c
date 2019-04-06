@@ -15,28 +15,20 @@ int partition(int* A,int* B,int p,int q){
 	// printf("pivot : %d\n", pivot);
 	int i = p;
 	int j = q;
-	while( i < j ){
-		if(query(pivot , B[i]) == -1){
-			swap(&B[i],&B[j]);
-			j--;
-		}
-		else if(query(pivot , B[i]) == 1){
-			i++;
-		}
-		else{
-			if(i+1 == j && B[i] < B[i+1])
-				break;
-			swap(&B[i],&B[i+1]);
-		}		
-		// printf("in loop\n");
+	while(1){
+		while( query(pivot,B[i]) == 1 ) i++;
+		while( query(pivot,B[j]) == -1  ) j--;
+		// printf("--%d %d\n",i,j );
+		if(i == j) break;
+		swap(&B[i],&B[j]);
 	}
-	// printf("finish the first part \n");
+
 	int middle = i;
 	// printf("middle : %d\n", middle);
 	pivot = B[middle];
 	i = p;
 	j = q;
-	
+
 	while(1){
 		while( query(A[i],pivot) == -1 ) i++;
 		while( query(A[j],pivot) == 1  ) j--;
@@ -65,8 +57,8 @@ int main(int argc, char const *argv[])
 	// int tea[] = {4,7,5,9,1,3,8,2,6};
 	// int n = sizeof(pan)/sizeof(pan[0]);
 	int N;
-	int pan[500000];
-	int tea[500000];
+	int pan[510000];
+	int tea[510000];
 	
 	scanf("%d",&N);				
 	for ( int i = 0 ; i < N ; i++)
@@ -77,11 +69,7 @@ int main(int argc, char const *argv[])
 	pan[N] = '\0';
 	tea[N] = '\0';
 		
-
-	int p = 0;
-	int q = N - 1; 
-
-	quicksort(pan,tea,p,q);	
+	quicksort(pan,tea,0,N-1);	
 	for(int i = 0 ; i < N ; i++){
 		printf("%d %d\n",pan[i],tea[i]);
 	}
